@@ -8,16 +8,19 @@ Otherwise only files ending with `.env` are used for key-value pairs and files w
 
 ## Example
 ```
-$ ./envsubst --env ~/environment-directory/ --sub ~/variable-directory/
+$ ./envsubst --env ~/environment-directory/ --sub ~/variable-directory/ --out=~/output-directory/
 2019/12/10 10:36:57 Looking for environment variables in ~/environment-directory/
 2019/12/10 10:36:57 Looking for variables to replace in ~/variable-directory/
+2019/12/10 10:36:57 Writing output to ~/output-directory/
+2019/12/10 10:36:57 _____________________________________
+2019/12/10 10:36:57
 2019/12/10 10:36:57 Reading ~/environment-directory/test.env
 2019/12/10 10:36:57 Reading ~/variable-directory/test.txt.variable
-2019/12/10 10:36:57 Writing ~/variable-directory/test.txt
+2019/12/10 10:36:57 Writing ~/output-directory/test.txt
 ```
 
 ## Docker
 You can use Docker to run the script by simply mounting the two directories:
 ```
-docker run --rm -v ~/environment-directory:/env -v ~/variable-directory:/sub docker.pkg.github.com/juliansauer/envsubst/envsubst:latest
+docker run --rm -v ~/environment-directory:/env -v ~/variable-directory:/sub -v ~/output-directory:/out docker.pkg.github.com/juliansauer/envsubst/envsubst:latest
 ```

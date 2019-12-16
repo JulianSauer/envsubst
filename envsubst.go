@@ -12,6 +12,7 @@ func main() {
     // Parse flags
     environmentDirectory := flag.String("env", "/", "Directory containing files with environment variables")
     substitutionDirectory := flag.String("sub", "/", "Directory containing files where variables will be substituted")
+    outputDirectory := flag.String("out", "/", "Output directory if the script doesn't work in-place")
     processAnyFile := flag.Bool("any", false, "If set to false only .env and .variables files will be processed")
     flag.Parse()
     if !strings.HasSuffix(*environmentDirectory, "/") {
@@ -20,8 +21,18 @@ func main() {
     if !strings.HasSuffix(*substitutionDirectory, "/") {
         *substitutionDirectory = *substitutionDirectory + "/"
     }
+    if *outputDirectory == "" {
+        outputDirectory = substitutionDirectory
+    }
+    if !strings.HasSuffix(*outputDirectory, "/") {
+        *outputDirectory = *outputDirectory + "/"
+    }
+
     log.Println("Looking for environment variables in " + *environmentDirectory)
     log.Println("Looking for variables to replace in " + *substitutionDirectory)
+    log.Println("Writing output to " + *outputDirectory)
+    log.Println("_____________________________________")
+    log.Println("")
 
     environmentVariables := make(map[string]string)
 
@@ -78,9 +89,9 @@ func main() {
         output := strings.Join(lines, "\n")
         var outputFile string
         if *processAnyFile {
-            outputFile = *substitutionDirectory + substitionFile.Name()
+            outputFile = *outputDirectory + substitionFile.Name()
         } else {
-            outputFile = *substitutionDirectory + strings.Replace(substitionFile.Name(), ".variable", "", -1)
+            outputFile = *outputDirectory + strings.Replace(substitionFile.Name(), ".variable", "", -1)
         }
         if e := ioutil.WriteFile(outputFile, []byte(output), 0644); e != nil {
             log.Fatal(e)

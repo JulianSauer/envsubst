@@ -9,5 +9,5 @@ RUN go build -o /go/bin/envsubst
 
 FROM gcr.io/distroless/static
 COPY --from=build-env /go/bin/envsubst /
-CMD ["/envsubst", "--env=/env", "--sub=/sub"]
-ENTRYPOINT ["/envsubst", "--env=/env", "--sub=/sub"]
+CMD ["/envsubst", "--env=/env", "--sub=/sub", "--out=/out"]
+ENTRYPOINT ["/envsubst", "--env=/env", "--sub=/sub", "--out=/out"]
