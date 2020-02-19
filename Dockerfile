@@ -7,7 +7,7 @@ RUN go get -d -v ./...
 
 RUN go build -o /go/bin/envsubst
 
-FROM gcr.io/distroless/static
+FROM scratch
 COPY --from=build-env /go/bin/envsubst /
 CMD ["/envsubst", "--env=/env", "--sub=/sub", "--out=/out"]
 ENTRYPOINT ["/envsubst", "--env=/env", "--sub=/sub", "--out=/out"]
