@@ -3,7 +3,7 @@ Similar to the Linux command `envsubst < file > newFile` this script can replace
 However it reads environment variables from files and can work in-place.
 
 The script expects two directories as parameters: One containing files with key-value pairs, one containing files where variables should be replaced with values.
-If the flag `--any' is provided, the script will read all files found in those directories and write the results into the read files.
+If the flag `--any` is provided, the script will read all files found in those directories and write the results into the read files.
 Otherwise only files ending with `.env` are used for key-value pairs and files with the naming scheme `<file>.variable` will be used as a template to write the results into `<file>`.
 
 ## Example
